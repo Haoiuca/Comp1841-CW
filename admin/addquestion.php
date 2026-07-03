@@ -1,7 +1,7 @@
 <?php
 try {
-    include 'includes/DatabaseConnection.php';
-    include 'includes/DatabaseFunctions.php';
+    include '../includes/DatabaseConnection.php';
+    include '../includes/DatabaseFunctions.php';
 
     if (isset($_POST['questionText'])) {
         
@@ -34,7 +34,7 @@ try {
         exit();
         
     } else {
-        include 'includes/DatabaseConnection.php';
+        include '../includes/DatabaseConnection.php';
         $authorSql = 'SELECT id, name FROM author';
         $author = $pdo->query($authorSql);
         
@@ -45,7 +45,7 @@ try {
         
         ob_start();
         
-        include 'templates/addquestion.html.php';
+        include '../templates/addquestion.html.php';
         
         $output = ob_get_clean();
     }
@@ -55,4 +55,4 @@ try {
     $output = 'Database error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
 }
 
-include 'templates/layout.html.php';
+include '../templates/layout.html.php';

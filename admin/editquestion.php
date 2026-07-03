@@ -1,6 +1,6 @@
 <?php
-include 'includes/DatabaseConnection.php';
-include 'includes/DatabaseFunctions.php';
+include '../includes/DatabaseConnection.php';
+include '../includes/DatabaseFunctions.php';
 
 try {
     if (isset($_POST['questionText'])) {
@@ -53,7 +53,7 @@ try {
 
        
         ob_start();
-        include 'templates/editquestion.html.php';
+        include '../templates/editquestion.html.php';
         $output = ob_get_clean();
     }
 
@@ -65,4 +65,4 @@ try {
     $output = $e->getMessage();
 }
 
-include 'templates/layout.html.php';
+include '../templates/layout.html.php';
