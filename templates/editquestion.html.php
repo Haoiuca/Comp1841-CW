@@ -1,7 +1,9 @@
 <h2>Edit Question Entry</h2>
 
-<form action="index.php?action=edit" method="POST">
-    <input type="hidden" name="questionId" value="<?=$question['id']?>">
+<form action="index.php" method="POST">
+    <input type="hidden" name="action" value="editquestion">
+    
+    <input type="hidden" name="id" value="<?=$question['id']?>">
 
     <div>
         <label for="questionText">Modify your query content:</label><br>

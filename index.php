@@ -27,7 +27,7 @@ try {
             $questions = getQuestionsWithDetails($pdo); 
             
             ob_start();
-            include '/templates/questions.html.php';
+            include 'templates/questions.html.php';
             $output = ob_get_clean();
             break;
 
@@ -62,7 +62,7 @@ try {
             }
 
             ob_start();
-            include '/templates/addquestion.html.php';
+            include 'templates/addquestion.html.php';
             $output = ob_get_clean();
             break;
 
@@ -89,7 +89,7 @@ try {
             }
 
             ob_start();
-            include '/templates/editquestion.html.php';
+            include 'templates/editquestion.html.php';
             $output = ob_get_clean();
             break;
 
