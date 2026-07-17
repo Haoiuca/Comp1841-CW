@@ -5,41 +5,29 @@ try {
 
     if (isset($_POST['questionText'])) {
         
-        
-        $sql = 'INSERT INTO questions SET 
-                questionText = :questionText,
-                questionDate = :questionDate,
-                image = :image,
-                authorId = :id,
-                moduleId = :moduleId';
-        
-        $stmt = $pdo->prepare($sql);
-        
-        
-        $stmt->bindValue(':questionText', $_POST['questionText']);
-        $stmt->bindValue(':questionDate', date('Y-m-d')); // Tự động lấy ngày hiện tại
-        
-        
+        // 1. Prepare dynamic variables
+        $questionDate = date('Y-m-d'); 
         $imagePath = !empty($_POST['image']) ? $_POST['image'] : null;
-        $stmt->bindValue(':image', $imagePath);
         
-        $stmt->bindValue(':authorId', $_POST['authorId']);
-        $stmt->bindValue(':moduleId', $_POST['moduleId']);
+        // 2. Call your master function to handle the preparation, binding, and execution safely
+        saveQuestion(
+            $pdo, 
+            $_POST['questionText'], 
+            $questionDate, 
+            $imagePath, 
+            $_POST['authorId'], 
+            $_POST['moduleId']
+        );
         
-       
-        $stmt->execute();
-        
-       
+        // 3. Redirect back to the question list
         header('location: index.php');
         exit();
         
     } else {
-        include '../includes/DatabaseConnection.php';
-        $authorSql = 'SELECT id, name FROM author';
-        $author = $pdo->query($authorSql);
         
-        $moduleSql = 'SELECT moduleId, moduleName FROM module';
-        $module = $pdo->query($moduleSql);
+        // 4. Use your functions to cleanly fetch dropdown data
+        $authors = allAuthors($pdo);
+        $modules = allModules($pdo);
         
         $title = 'Add a new question';
         
@@ -55,4 +43,4 @@ try {
     $output = 'Database error: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine();
 }
 
-include '../templates/layout.html.php';
+include '../templates/admin_layout.html.php';

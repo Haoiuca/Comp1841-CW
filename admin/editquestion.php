@@ -3,55 +3,38 @@ include '../includes/DatabaseConnection.php';
 include '../includes/DatabaseFunctions.php';
 
 try {
+    // 1. Check if the form was submitted
     if (isset($_POST['questionText'])) {
-        $sql = 'UPDATE questions 
-                SET questionText = :questionText, 
-                    authorId = :authorId, 
-                    moduleId = :moduleId 
-                WHERE id = :id';
-                
-        $stmt = $pdo->prepare($sql);
         
-        $stmt->bindValue(':questionText', $_POST['questionText']);
-        $stmt->bindValue(':authorId', $_POST['authorId']);
-        $stmt->bindValue(':moduleId', $_POST['moduleId']);
-        $stmt->bindValue(':id', $_POST['questionId']); // Khóa chính từ trường hidden trong form
+        // 2. Call your master update function (Fixing the questionId -> id bug)
+        updateQuestion(
+            $pdo,
+            $_POST['id'], 
+            $_POST['questionText'],
+            $_POST['authorId'],
+            $_POST['moduleId']
+        );
         
-     
-        $stmt->execute();
-        
-        header('Location: questions.php');
+        // 3. Redirect back to the questions list upon success
+        header('Location: index.php'); 
         exit();
         
     } 
     else {
-        
-        $sql = 'SELECT * FROM questions WHERE id = :id';
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(':id', $_GET['id']);
-        $stmt->execute();
-        
-        
-        $question = $stmt->fetch();
+        // 4. Fetch the existing question data to populate the form
+        $question = findQuestionById($pdo, $_GET['id']);
         
         if (!$question) {
             throw new Exception('Question not found.');
         }
 
-      
-        $sqlAuthors = 'SELECT id, name FROM authors';
-        $authorsStmt = $pdo->query($sqlAuthors);
-        $authors = $authorsStmt->fetchAll();
-
-        
-        $sqlModules = 'SELECT id, moduleName FROM modules';
-        $modulesStmt = $pdo->query($sqlModules);
-        $modules = $modulesStmt->fetchAll();
-
+        // 5. Cleanly fetch dropdown data in two lines
+        $authors = allAuthors($pdo);
+        $modules = allModules($pdo);
         
         $title = 'Edit Question';
 
-       
+        // 6. Start Output Buffering
         ob_start();
         include '../templates/editquestion.html.php';
         $output = ob_get_clean();
@@ -65,4 +48,5 @@ try {
     $output = $e->getMessage();
 }
 
-include '../templates/layout.html.php';
+// 7. Inject into the layout
+include '../templates/admin_layout.html.php';

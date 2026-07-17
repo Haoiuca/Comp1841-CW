@@ -50,7 +50,7 @@ try {
                 $imageFilename = null;
                 if (!empty($_FILES['image']['name'])) {
                     $imageFilename = $_FILES['image']['name'];
-                    move_uploaded_file($_FILES['image']['tmp_name'], '/uploads/' . $imageFilename);
+                    move_uploaded_file($_FILES['image']['tmp_name'], __DIR__ . '/uploads/' . $imageFilename);
                 }
 
                 // Insert into the database using a parameterized helper function

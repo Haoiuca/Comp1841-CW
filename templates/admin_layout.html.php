@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="../forum.css">
 </head>
 <body>
-    <header id="admin">
-        <h1>Student Stack Overflow - Admin</h1>
+    <header>
+        <h1>Student Stack Overflow - Admin Panel</h1>
     </header>
     
     <nav>

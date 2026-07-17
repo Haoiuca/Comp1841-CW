@@ -1,42 +1,52 @@
 <?php
 
+## REUSABLE QUERY FUNCTION ##
+// This replaces the need to manually prepare and execute every time.
+function query($pdo, $sql, $parameters = []) {
+    $query = $pdo->prepare($sql);
+    $query->execute($parameters);
+    return $query;
+}
+
+
+## SPECIFIC DATABASE FUNCTIONS ##
+
 function getQuestionsWithDetails($pdo) {
-    // Using explicit INNER JOINs to pull relational entity data together
     $sql = 'SELECT `questions`.`id`, `questions`.`questionText`, `questions`.`questionDate`, `questions`.`image`, 
-                   `authors`.`name` AS authorName, `authors`.`email` AS authorEmail,
-                   `modules`.`moduleName`, `modules`.`moduleCode`
+                   `author`.`name` AS authorName, `author`.`email` AS authorEmail,
+                   `module`.`moduleName`, `module`.`moduleCode`
             FROM `questions`
-            INNER JOIN `authors` ON `questions`.`authorId` = `authors`.`id`
-            INNER JOIN `modules` ON `questions`.`moduleId` = `modules`.`id`
+            INNER JOIN `author` ON `questions`.`authorId` = `author`.`id`
+            INNER JOIN `module` ON `questions`.`moduleId` = `module`.`moduleId`
             ORDER BY `questions`.`questionDate` DESC';
             
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll(); // Returns an array of associative arrays
+    $query = query($pdo, $sql);
+    return $query->fetchAll();
 }
 
 
 function findQuestionById($pdo, $id) {
     $sql = 'SELECT * FROM `questions` WHERE `id` = :id';
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':id', $id);
-    $stmt->execute();
-    return $stmt->fetch(); // Returns just one row array
+    $parameters = ['id' => $id];
+    
+    $query = query($pdo, $sql, $parameters);
+    return $query->fetch();
 }
 
 
 function allAuthors($pdo) {
-    $sql = 'SELECT * FROM `authors` ORDER BY `name` ASC';
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll();
+    $sql = 'SELECT * FROM `author` ORDER BY `name` ASC';
+    
+    $query = query($pdo, $sql);
+    return $query->fetchAll();
 }
 
+
 function allModules($pdo) {
-    $sql = 'SELECT * FROM `modules` ORDER BY `moduleCode` ASC';
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute();
-    return $stmt->fetchAll();
+    $sql = 'SELECT * FROM `module` ORDER BY `moduleCode` ASC';
+    
+    $query = query($pdo, $sql);
+    return $query->fetchAll();
 }
 
 
@@ -44,32 +54,37 @@ function saveQuestion($pdo, $questionText, $questionDate, $image, $authorId, $mo
     $sql = 'INSERT INTO `questions` (`questionText`, `questionDate`, `image`, `authorId`, `moduleId`) 
             VALUES (:questionText, :questionDate, :image, :authorId, :moduleId)';
             
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':questionText', $questionText);
-    $stmt->bindValue(':questionDate', $questionDate);
-    $stmt->bindValue(':image', $image);
-    $stmt->bindValue(':authorId', $authorId);
-    $stmt->bindValue(':moduleId', $moduleId);
-    $stmt->execute();
+    $parameters = [
+        'questionText' => $questionText,
+        'questionDate' => $questionDate,
+        'image' => $image,
+        'authorId' => $authorId,
+        'moduleId' => $moduleId
+    ];
+    
+    query($pdo, $sql, $parameters);
 }
+
 
 function updateQuestion($pdo, $id, $questionText, $authorId, $moduleId) {
     $sql = 'UPDATE `questions` 
             SET `questionText` = :questionText, `authorId` = :authorId, `moduleId` = :moduleId 
             WHERE `id` = :id';
             
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':id', $id);
-    $stmt->bindValue(':questionText', $questionText);
-    $stmt->bindValue(':authorId', $authorId);
-    $stmt->bindValue(':moduleId', $moduleId);
-    $stmt->execute(); // Runs updates cleanly via POST execution hooks
+    $parameters = [
+        'id' => $id,
+        'questionText' => $questionText,
+        'authorId' => $authorId,
+        'moduleId' => $moduleId
+    ];
+    
+    query($pdo, $sql, $parameters);
 }
 
 
 function deleteQuestion($pdo, $id) {
     $sql = 'DELETE FROM `questions` WHERE `id` = :id';
-    $stmt = $pdo->prepare($sql);
-    $stmt->bindValue(':id', $id);
-    $stmt->execute();
+    $parameters = ['id' => $id];
+    
+    query($pdo, $sql, $parameters);
 }

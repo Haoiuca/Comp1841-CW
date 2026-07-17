@@ -25,7 +25,7 @@
         <label for="moduleId">Module Assignment:</label><br>
         <select id="moduleId" name="moduleId" required>
             <?php foreach ($modules as $module): ?>
-                <option value="<?=$module['id']?>" <?=$module['id'] == $question['moduleId'] ? 'selected' : ''?>>
+                <option value="<?=$module['moduleId']?>" <?=$module['moduleId'] == $question['moduleId'] ? 'selected' : ''?>>
                     <?=htmlspecialchars($module['moduleCode'] . ' - ' . $module['moduleName'], ENT_QUOTES, 'UTF-8')?>
                 </option>
             <?php endforeach; ?>
