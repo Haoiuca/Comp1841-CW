@@ -18,6 +18,7 @@
             <li><a href="addquestion.php">Ask a Question</a></li>
             <li><a href="admin/question.php">Admin</a></li>
             <li><a href="login.php">Login</a></li>
+            <li><a href="contact.php">Contact Us</a></li>
         </ul>
     </nav>
     

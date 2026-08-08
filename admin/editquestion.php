@@ -1,4 +1,5 @@
 <?php
+include '../login/Check.php';
 include '../includes/DatabaseConnection.php';
 include '../includes/DatabaseFunctions.php';
 

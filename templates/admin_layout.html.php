@@ -19,6 +19,7 @@
             <li><a href="../index.php">Public Site</a></li>
             <li><a href="modules.php">Manage Modules</a></li>
             <li><a href="authors.php">Manage Authors</a></li>
+            <li><a href="../logout.php">Log Out</a></li>
         </ul>
     </nav>
     

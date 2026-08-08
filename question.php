@@ -8,12 +8,13 @@ try {
 
     // 2. Set the title for the browser tab
     $title = 'Student Stack Overflow - Questions';
+    $basePath = '';
 
     // 3. Start Output Buffering
     ob_start();
     
     // 4. Load the template (which will loop through the $questions array)
-    include 'templates/public_question.html.php';
+    include 'templates/question.html.php';
     
     // 5. Clean the buffer and store the HTML into the $output variable
     $output = ob_get_clean();

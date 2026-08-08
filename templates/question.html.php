@@ -8,7 +8,7 @@
         </p>
         
         <?php if (!empty($question['image'])): ?>
-            <p><img src="uploads/<?=htmlspecialchars($question['image'], ENT_QUOTES, 'UTF-8')?>" alt="Question Screenshot" style="max-width:300px; display:block; margin:10px 0;"></p>
+            <p><img src="<?= $basePath ?>uploads/<?= htmlspecialchars($question['image'], ENT_QUOTES, 'UTF-8') ?>" alt="Question Image" style="max-width: 150px;"></p>
         <?php endif; ?>
         
         <div class="meta-data">

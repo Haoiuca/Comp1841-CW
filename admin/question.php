@@ -1,4 +1,5 @@
 <?php
+include '../login/Check.php';
 include '../includes/DatabaseConnection.php';
 include '../includes/DatabaseFunctions.php';
 
@@ -9,6 +10,7 @@ try {
 
     // 2. Set the title for the browser tab
     $title = 'Student Stack Overflow - Questions';
+    $basePath = '../';
 
     // 3. Start Output Buffering
     ob_start();
