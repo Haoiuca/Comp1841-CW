@@ -42,11 +42,92 @@ function allAuthors($pdo) {
 }
 
 
+function getAuthor($pdo, $id) {
+    $parameters = [':id' => $id];
+    $query = query($pdo, 'SELECT * FROM author WHERE id = :id', $parameters);
+    return $query->fetch();
+}
+
+function getAuthorByEmail($pdo, $email) {
+    $parameters = [':email' => $email];
+    $query = query($pdo, 'SELECT * FROM author WHERE email = :email', $parameters);
+    return $query->fetch();
+}
+
+function insertAuthor($pdo, $name, $email, $password) {
+    $query = 'INSERT INTO author (name, email, password) VALUES (:name, :email, :password)';
+    $parameters = [
+        ':name' => $name, 
+        ':email' => $email,
+        // Hash the password securely!
+        ':password' => password_hash($password, PASSWORD_DEFAULT) 
+    ];
+    query($pdo, $query, $parameters);
+}
+
+function updateAuthor($pdo, $id, $name, $email) {
+    $query = 'UPDATE author SET name = :name, email = :email WHERE id = :id';
+    $parameters = [':name' => $name, ':email' => $email, ':id' => $id];
+    query($pdo, $query, $parameters);
+}
+
+function deleteAuthor($pdo, $id) {
+    // Note: Due to Foreign Keys, deleting an author will delete their questions (if ON DELETE CASCADE)
+    $parameters = [':id' => $id];
+    query($pdo, 'DELETE FROM author WHERE id = :id', $parameters);
+}
+
+
 function allModules($pdo) {
     $sql = 'SELECT * FROM `module` ORDER BY `moduleCode` ASC';
     
     $query = query($pdo, $sql);
     return $query->fetchAll();
+}
+
+
+function getModule($pdo, $id) {
+    $parameters = [':id' => $id];
+    // Changed FROM modules to FROM module
+    $query = query($pdo, 'SELECT * FROM module WHERE id = :id', $parameters);
+    return $query->fetch();
+}
+
+function insertModule($pdo, $moduleName, $moduleCode) {
+    // Changed INTO modules to INTO module
+    $query = 'INSERT INTO module (moduleName, moduleCode) VALUES (:moduleName, :moduleCode)';
+    $parameters = [':moduleName' => $moduleName, ':moduleCode' => $moduleCode];
+    query($pdo, $query, $parameters);
+}
+
+function updateModule($pdo, $id, $moduleName, $moduleCode) {
+    // Changed FROM modules to FROM module
+    $query = 'UPDATE module SET moduleName = :moduleName, moduleCode = :moduleCode WHERE id = :id';
+    $parameters = [':moduleName' => $moduleName, ':moduleCode' => $moduleCode, ':id' => $id];
+    query($pdo, $query, $parameters);
+}
+
+function deleteModule($pdo, $id) {
+    // Note: Due to Foreign Keys, deleting a module will delete its questions (if ON DELETE CASCADE)
+    $parameters = [':id' => $id];
+    query($pdo, 'DELETE FROM module WHERE id = :id', $parameters);
+}
+
+
+function insertQuestion($pdo, $questionText, $questionDate, $image, $authorId, $moduleId) {
+    // Add 'image' to the columns and ':image' to the VALUES
+    $query = 'INSERT INTO questions (questionText, questionDate, image, authorId, moduleId) 
+              VALUES (:questionText, :questionDate, :image, :authorId, :moduleId)';
+              
+    $parameters = [
+        ':questionText' => $questionText,
+        ':questionDate' => $questionDate,
+        ':image' => $image, // Pass the image string here
+        ':authorId' => $authorId,
+        ':moduleId' => $moduleId
+    ];
+    
+    query($pdo, $query, $parameters);
 }
 
 

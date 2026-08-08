@@ -1,9 +1,9 @@
 <h2>Available Student Questions</h2>
-<a href="addquestion.php" class="button">Ask a Question</a>
+<!-- <a href="addquestion.php" class="button">Ask a Question</a> -->
 <?php foreach ($questions as $question): ?>
     <blockquote class="question-box">
         <p>
-            <strong>Question:</strong><br>
+            <strong>Question:</strong><br>`
             <?=htmlspecialchars($question['questionText'], ENT_QUOTES, 'UTF-8')?>
         </p>
         

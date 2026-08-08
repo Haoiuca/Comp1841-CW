@@ -14,9 +14,11 @@
     <nav>
         <ul>
             <!-- <li><a href="index.php">Home</a></li> -->
-            <li><a href="admin/question.php">Questions List</a></li>
-            <li><a href="admin/addquestion.php">Ask a Question</a></li>
+            <li><a href="question.php">Questions List</a></li>
+            <!--<li><a href="admin/addquestion.php">Ask a Question</a></li>-->
             <li><a href="../index.php">Public Site</a></li>
+            <li><a href="modules.php">Manage Modules</a></li>
+            <li><a href="authors.php">Manage Authors</a></li>
         </ul>
     </nav>
     

@@ -16,7 +16,7 @@ try {
         );
         
         // 3. Redirect back to the questions list upon success
-        header('Location: index.php'); 
+        header('Location: question.php'); 
         exit();
         
     } 

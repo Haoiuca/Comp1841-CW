@@ -1,6 +1,6 @@
 <h2>Edit Question Entry</h2>
 
-<form action="index.php" method="POST">
+<form action="" method="POST">
     <input type="hidden" name="action" value="editquestion">
     
     <input type="hidden" name="id" value="<?=$question['id']?>">
