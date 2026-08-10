@@ -7,7 +7,7 @@ try {
     // 1. Check if the form was submitted
     if (isset($_POST['questionText'])) {
         
-        // 2. Call your master update function (Fixing the questionId -> id bug)
+        // 2. Call master update function (Fixing the questionId -> id bug)
         updateQuestion(
             $pdo,
             $_POST['id'], 

@@ -17,7 +17,7 @@
             <span class="date">On: <?=date('d-m-Y', strtotime($question['questionDate']))?></span>
         </div>
      
-           <div class="actions-panel" style="margin-top: 10px;">
+        <div class="actions-panel" style="margin-top: 10px;">
             <a href="editquestion.php?id=<?=$question['id']?>">Edit</a>
             
             <form action="deletequestion.php" method="POST" style="display:inline; margin-left: 10px;">
