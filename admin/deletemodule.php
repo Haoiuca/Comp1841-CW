@@ -4,7 +4,7 @@ try {
     include '../includes/DatabaseConnection.php';
     include '../includes/DatabaseFunctions.php';
 
-    // Call your delete function, passing the ID sent from the hidden form button
+    // Call delete function, passing the ID sent from the hidden form button
     deleteModule($pdo, $_POST['id']);
 
     // Redirect back to the list

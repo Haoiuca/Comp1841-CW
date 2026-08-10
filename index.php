@@ -11,7 +11,7 @@ try {
     // 3. Process routing actions using a switch statement
     switch ($route) {
         case 'home':
-            $title = 'Student Stack Overflow - Home';
+            $title = 'Student Forum - Home';
             
             // Capture the home page contents into output buffering
             ob_start();

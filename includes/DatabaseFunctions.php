@@ -1,7 +1,4 @@
 <?php
-
-## REUSABLE QUERY FUNCTION ##
-// This replaces the need to manually prepare and execute every time.
 function query($pdo, $sql, $parameters = []) {
     $query = $pdo->prepare($sql);
     $query->execute($parameters);
@@ -12,7 +9,7 @@ function query($pdo, $sql, $parameters = []) {
 ## SPECIFIC DATABASE FUNCTIONS ##
 
 function getQuestionsWithDetails($pdo) {
-    $sql = 'SELECT `questions`.`id`, `questions`.`questionText`, `questions`.`questionDate`, `questions`.`image`, 
+    $sql = 'SELECT `questions`.`id`, `questions`.`authorId`, `questions`.`questionText`, `questions`.`questionDate`, `questions`.`image`, 
                    `author`.`name` AS authorName, `author`.`email` AS authorEmail,
                    `module`.`moduleName`, `module`.`moduleCode`
             FROM `questions`
@@ -88,21 +85,18 @@ function allModules($pdo) {
 
 function getModule($pdo, $id) {
     $parameters = [':id' => $id];
-    // Changed FROM modules to FROM module
-    $query = query($pdo, 'SELECT * FROM module WHERE id = :id', $parameters);
+    $query = query($pdo, 'SELECT * FROM module WHERE moduleId = :id', $parameters);
     return $query->fetch();
 }
 
 function insertModule($pdo, $moduleName, $moduleCode) {
-    // Changed INTO modules to INTO module
     $query = 'INSERT INTO module (moduleName, moduleCode) VALUES (:moduleName, :moduleCode)';
     $parameters = [':moduleName' => $moduleName, ':moduleCode' => $moduleCode];
     query($pdo, $query, $parameters);
 }
 
 function updateModule($pdo, $id, $moduleName, $moduleCode) {
-    // Changed FROM modules to FROM module
-    $query = 'UPDATE module SET moduleName = :moduleName, moduleCode = :moduleCode WHERE id = :id';
+    $query = 'UPDATE module SET moduleName = :moduleName, moduleCode = :moduleCode WHERE moduleId = :id';
     $parameters = [':moduleName' => $moduleName, ':moduleCode' => $moduleCode, ':id' => $id];
     query($pdo, $query, $parameters);
 }
@@ -110,19 +104,18 @@ function updateModule($pdo, $id, $moduleName, $moduleCode) {
 function deleteModule($pdo, $id) {
     // Note: Due to Foreign Keys, deleting a module will delete its questions (if ON DELETE CASCADE)
     $parameters = [':id' => $id];
-    query($pdo, 'DELETE FROM module WHERE id = :id', $parameters);
+    query($pdo, 'DELETE FROM module WHERE moduleId = :id', $parameters);
 }
 
 
 function insertQuestion($pdo, $questionText, $questionDate, $image, $authorId, $moduleId) {
-    // Add 'image' to the columns and ':image' to the VALUES
     $query = 'INSERT INTO questions (questionText, questionDate, image, authorId, moduleId) 
               VALUES (:questionText, :questionDate, :image, :authorId, :moduleId)';
               
     $parameters = [
         ':questionText' => $questionText,
         ':questionDate' => $questionDate,
-        ':image' => $image, // Pass the image string here
+        ':image' => $image, 
         ':authorId' => $authorId,
         ':moduleId' => $moduleId
     ];

@@ -1,6 +1,16 @@
 <h2>Contact Us</h2>
 
-<p>Have a question about the Student Stack Overflow? Send us a message!</p>
+<p>Have a question about the Student Forum? Send us a message!</p>
+
+<?php if (isset($messageStatus)): ?>
+    <script>
+        <?php if ($messageStatus === 'success'): ?>
+            alert("Success! Your simulated message has been processed.");
+        <?php elseif ($messageStatus === 'error'): ?>
+            alert("Error: Please provide a valid email address.");
+        <?php endif; ?>
+    </script>
+<?php endif; ?>
 
 <form action="" method="POST">
     <div>

@@ -10,7 +10,7 @@ try {
         $questionDate = date('Y-m-d'); 
         $imagePath = !empty($_POST['image']) ? $_POST['image'] : null;
         
-        // 2. Call your master function to handle the preparation, binding, and execution safely
+        // 2. Call master function to handle the preparation, binding, and execution safely
         saveQuestion(
             $pdo, 
             $_POST['questionText'], 
@@ -26,7 +26,7 @@ try {
         
     } else {
         
-        // 4. Use your functions to cleanly fetch dropdown data
+        // 4. Use functions to cleanly fetch dropdown data
         $authors = allAuthors($pdo);
         $modules = allModules($pdo);
         

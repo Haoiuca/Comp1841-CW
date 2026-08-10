@@ -1,4 +1,4 @@
-<h2>Welcome to the Student Stack Overflow Portal</h2>
+<h2>Welcome to the Student Forum Portal</h2>
 
 <p>
     This platform allows university students to post course-related technical questions, 
