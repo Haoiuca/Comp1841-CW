@@ -6,7 +6,7 @@ include '../includes/DatabaseFunctions.php';
 try {
     $questions = getQuestionsWithDetails($pdo);
 
-    $title = 'Student Stack Overflow - Questions';
+    $title = 'Student Forum - Questions';
     $basePath = '../';
 
     ob_start();
