@@ -1,7 +1,7 @@
 <h2>Edit Module</h2>
 
 <form action="" method="POST">
-    <input type="hidden" name="id" value="<?= htmlspecialchars($module['id'], ENT_QUOTES, 'UTF-8') ?>">
+    <input type="hidden" name="id" value="<?= htmlspecialchars($module['moduleId'], ENT_QUOTES, 'UTF-8') ?>">
     
     <div>
         <label for="moduleCode">Module Code:</label><br>
