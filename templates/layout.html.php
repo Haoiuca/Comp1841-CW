@@ -27,7 +27,7 @@
     </main>
     
     <footer>
-        <p>&copy; <?=date('Y')?> Student Stack Overflow. All Rights Reserved.</p>
+        <p>&copy; <?=date('Y')?> Student Forum. All Rights Reserved.</p>
     </footer>
 </body>
 </html>
